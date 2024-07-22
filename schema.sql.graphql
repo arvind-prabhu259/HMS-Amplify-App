@@ -1,0 +1,53 @@
+input AMPLIFY {
+ engine: String = "mysql"  
+}
+
+
+type BOOKING @refersTo(name: "BOOKINGS") @model {
+  bOOKINGID: Int! @refersTo(name: "BOOKING_ID") @primaryKey
+  rOLLNO: String! @refersTo(name: "ROLL_NO") @index(name: "ROLL_NO")
+  rOOMID: Int! @refersTo(name: "ROOM_ID") @index(name: "ROOM_ID")
+  aLLOTMENTDATE: AWSDate @refersTo(name: "ALLOTMENT_DATE")
+  cOMPLETIONDATE: AWSDate @refersTo(name: "COMPLETION_DATE")
+  sTATE: BOOKINGS_STATE @refersTo(name: "STATE")
+}
+
+enum BOOKINGS_STATE {
+  ACTIVE
+  COMPLETED
+  PENDING
+}
+
+type HOSTEL @refersTo(name: "HOSTELS") @model {
+  hOSTELID: Int! @refersTo(name: "HOSTEL_ID") @primaryKey
+  hOSTELNAME: String! @refersTo(name: "HOSTEL_NAME") @index(name: "HOSTEL_NAME")
+  lOCATION: String @refersTo(name: "LOCATION")
+}
+
+type ROOM @refersTo(name: "ROOMS") @model {
+  rOOMID: Int! @refersTo(name: "ROOM_ID") @primaryKey
+  hOSTELID: Int! @refersTo(name: "HOSTEL_ID") @index(name: "HOSTEL_ID")
+  rOOMNUMBER: String! @refersTo(name: "ROOM_NUMBER")
+  rOOMTYPE: ROOMS_ROOM_TYPE! @refersTo(name: "ROOM_TYPE")
+  fLOORNUMBER: Int! @refersTo(name: "FLOOR_NUMBER")
+  cAPACITY: Int! @refersTo(name: "CAPACITY")
+  aVAILABLE: Int! @refersTo(name: "AVAILABLE")
+}
+
+enum ROOMS_ROOM_TYPE {
+  SINGLE
+  DOUBLE
+  TRIPLE
+}
+
+type STUDENT @refersTo(name: "STUDENTS") @model {
+  rOLLNO: String! @refersTo(name: "ROLL_NO") @primaryKey
+  fIRSTNAME: String! @refersTo(name: "FIRST_NAME")
+  lASTNAME: String! @refersTo(name: "LAST_NAME")
+  aGE: Int! @refersTo(name: "AGE")
+  bRANCH: String! @refersTo(name: "BRANCH")
+  mOBNO: Int! @refersTo(name: "MOBNO")
+  eMAIL: String! @refersTo(name: "EMAIL") @index(name: "EMAIL")
+  aDDRESS: String! @refersTo(name: "ADDRESS")
+  dATEOFADMISSION: AWSDate! @refersTo(name: "DATE_OF_ADMISSION")
+}

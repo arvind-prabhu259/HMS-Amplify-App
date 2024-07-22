@@ -1,0 +1,30 @@
+AWS CDK(amplify infra):
+API
+
+CDK Deploy Outputs:
+Outputs:
+AmplifyInfraStack.amplifyApiModelSchemaS3Uri = s3://amplifyinfrastack-sqlboundapiamplifycodegenassetsa-fkonkffg8aie/model-schema.graphql
+AmplifyInfraStack.awsAppsyncApiEndpoint = https://ato5js2u75gd5e337hi62w3pla.appsync-api.ap-south-1.amazonaws.com/graphql
+AmplifyInfraStack.awsAppsyncApiId = zrkqor7hkfckrk7a5cdaeyqiuy
+AmplifyInfraStack.awsAppsyncApiKey = da2-c56pormu3bg25mkbrsrb2ujx4e       
+AmplifyInfraStack.awsAppsyncAuthenticationType = API_KEY
+AmplifyInfraStack.awsAppsyncRegion = ap-south-1
+Stack ARN:
+arn:aws:cloudformation:ap-south-1:381491961651:stack/AmplifyInfraStack/39d41420-4848-11ef-be48-0ab13bf134a3
+
+
+install and generate code
+npx @aws-amplify/cli codegen add --apiId <API_ID> --region ap-south-1
+
+generate code when schema changes:
+cdk deploy                              push changes to cloud
+npx @aws-amplify/cli codegen            generate code
+
+import * as cdk from '@aws-cdk/core';
+import * as amplify from '@aws-cdk/aws-amplify';
+import * as  cognito from '@aws-cdk/aws-cognito';
+import { Construct } from 'constructs';
+import * as path from 'path';
+import { AmplifyGraphqlApi, AmplifyGraphqlDefinition } from '@aws-amplify/graphql-api-construct';
+
+npx @aws-amplify/cli codegen add --apiId zrkqor7hkfckrk7a5cdaeyqiuy --region ap-south-1

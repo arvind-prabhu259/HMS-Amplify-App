@@ -1,0 +1,202 @@
+# define student type
+type Student{
+    id: Int!
+    rollNo: String!
+    firstName: String!
+    lastName: String!
+    age: Int!
+    branch: String!
+    mobNo: Int!
+    email: String!
+    address: String!
+    dateOfAdmission: String!
+    bookings: [Booking!]!
+}
+
+# Define the Hostel type
+type Hostel {
+    id: ID!
+    hostelName: String!
+    location: String
+    rooms: [Room!]!
+}
+
+# Define the Room type
+type Room {
+    id: ID!
+    hostel: Hostel!
+    roomNumber: String!
+    roomType: RoomType!
+    floorNumber: Int!
+    capacity: Int!
+    available: Int!
+    bookings: [Booking!]!
+}
+
+# Enum type for RoomType
+enum RoomType {
+    SINGLE
+    DOUBLE
+    TRIPLE
+}
+
+# Define the Booking type
+type Booking {
+    id: ID!
+    student: Student!
+    room: Room!
+    allotmentDate: String
+    completionDate: String
+    state: BookingState!
+}
+
+# Enum type for BookingState
+enum BookingState {
+    ACTIVE
+    COMPLETED
+    PENDING
+}
+
+
+# Define outputs for stopros
+type makeBookingOutput {
+    Error_Message: String
+    Success_Message: String
+}
+
+type cancelBookingOutput {
+    Error_Message: String
+    Success_Message: String
+}
+
+type getCurrentBookingInfoOutput {
+    roomId: Int!
+    roomNo: String!
+    floorNo: Int!
+    RoomType: String!
+    capacity: Int!
+    available: Int!
+    hostelName: String!
+    allotmentDate: String
+    completionDate: String
+    state: String
+}
+
+type getAllHostelInfoOutput {
+    hostelName: String!
+    location: String!
+    numRooms: Int!
+    numAvailable: Int!
+}
+
+type getHostelInfoOutput {
+    hostelName: String!
+    location: String!
+    roomNo: String!
+    floorNo: Int!
+    RoomType: String!
+    capacity: Int!
+    available: Int!
+}
+
+type retrieveBookingInfoOutput {
+    hostelId: Int!
+    roomNo: String!
+    floorNo: Int!
+    RoomType: String!
+    capacity: Int!
+    available: Int!
+    allotmentDate: String
+    completionDate: String
+    state: String
+}
+
+
+# Define the Query type
+type Query {
+
+    students: [Student!]!
+    @auth(rules: [{ allow: groups, groups: ["Admin"] }])
+    student(rollNo: String!): Student
+    @auth(rules: [{ allow: groups, groups: ["Admin"] }])
+    hostels: [Hostel!]!
+    @auth(rules: [{ allow: groups, groups: ["Admin"] }])
+    hostel(id: ID!): Hostel
+    @auth(rules: [{ allow: groups, groups: ["Admin"] }])
+    rooms: [Room!]!
+    @auth(rules: [{ allow: groups, groups: ["Admin"] }])
+    room(id: ID!): Room
+    @auth(rules: [{ allow: groups, groups: ["Admin"] }])
+    bookings: [Booking!]!
+    @auth(rules: [{ allow: groups, groups: ["Admin"] }])
+    booking(id: ID!): Booking
+    @auth(rules: [{ allow: groups, groups: ["Admin"] }])
+        
+
+    getAllHostelInfo: [getAllHostelInfoOutput]
+        @auth(rules: [{ allow: public }])
+        @sql(statement: "CALL GET_ALL_HOSTEL_INFO;")
+
+    getHostelInfo(hostelId: Int): [getHostelInfoOutput]
+        @auth(rules: [{ allow: public }])
+        @sql(statement: "CALL GET_HOSTEL_INFO( :hostelId );")
+
+    
+    retrieveBookingInfo(rollNo: String): [retrieveBookingInfoOutput]
+        @auth(rules: [{ allow: groups, groups: ["Guests","Admin"] }])
+        @sql(statement: "CALL RETRIEVE_BOOKING_INFO( :rollNo );")
+
+    getCurrentBookingInfo(rollNo: String): [getCurrentBookingInfoOutput]
+        @auth(rules: [{ allow: groups, groups: ["Guests","Admin"] }])
+        @sql(statement: "CALL GET_CURRENT_BOOKING_INFO( :rollNo );")
+}
+
+
+# Define the Mutation type
+type Mutation {
+    createStudent(
+        rollNo: String!
+        firstName: String!
+        lastName: String!
+        age: Int!
+        branch: String!
+        mobNo: Int!
+        email: String!
+        address: String!
+        dateOfAdmission: String!
+    ): Student!
+    @auth(rules: [{ allow: groups, groups: ["Admin"] }])
+
+    createHostel(
+        hostelName: String!
+        location: String
+    ): Hostel!
+    @auth(rules: [{ allow: groups, groups: ["Admin"] }])
+
+    createRoom(
+        hostelId: ID!
+        roomNumber: String!
+        roomType: RoomType!
+        floorNumber: Int!
+        capacity: Int!
+        available: Int!
+    ): Room!
+    @auth(rules: [{ allow: groups, groups: ["Admin"] }])
+
+    createBooking(
+        rollNo: String!
+        roomId: ID!
+        allotmentDate: String
+        completionDate: String
+        state: BookingState!
+    ): Booking!
+    @auth(rules: [{ allow: groups, groups: ["Admin"] }])
+
+    makeBooking(roomNo: String, hostelId: Int, rollNo: String): [makeBookingOutput]
+        @auth(rules: [{ allow: groups, groups: ["Guests","Admin"] }])
+        @sql(statement: "CALL MAKE_BOOKING(:roomNo, :hostelId, :rollNo);")
+
+    cancelBooking(rollNo: String): [cancelBookingOutput]
+        @auth(rules: [{ allow: groups, groups: ["Guests","Admin"] }])
+        @sql(statement: "CALL CANCEL_BOOKING(:rollNo);")
+}

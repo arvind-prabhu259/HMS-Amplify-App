@@ -1,0 +1,10 @@
+[
+  {
+    "groupName": "HMSAuthorizedUsers",
+    "precedence": 1
+  },
+  {
+    "groupName": "HMSUnAuthorizedUsers",
+    "precedence": 2
+  }
+]

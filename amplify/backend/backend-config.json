@@ -1,0 +1,113 @@
+{
+  "api": {},
+  "auth": {
+    "amplifydocsgen1": {
+      "dependsOn": [],
+      "frontendAuthConfig": {
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyCharacters": [],
+          "passwordPolicyMinLength": 8
+        },
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "socialProviders": [],
+        "usernameAttributes": [],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito",
+      "serviceType": "managed"
+    },
+    "userPoolGroups": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId",
+            "AppClientIDWeb",
+            "AppClientID",
+            "IdentityPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "amplifydocsgen1"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito-UserPool-Groups"
+    }
+  },
+  "function": {
+    "GuestAPIHandler": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "adminAPIHandler": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "createFunction": {
+      "build": true,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_GuestAPIHandler_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "GuestAPIHandler"
+        }
+      ]
+    },
+    "AMPLIFY_function_GuestAPIHandler_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "GuestAPIHandler"
+        }
+      ]
+    },
+    "AMPLIFY_function_adminAPIHandler_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "adminAPIHandler"
+        }
+      ]
+    },
+    "AMPLIFY_function_adminAPIHandler_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "adminAPIHandler"
+        }
+      ]
+    },
+    "AMPLIFY_function_createFunction_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "createFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_createFunction_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "createFunction"
+        }
+      ]
+    }
+  }
+}
