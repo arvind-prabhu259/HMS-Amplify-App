@@ -1,6 +1,64 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getAllHostelInfo = /* GraphQL */ `
+  query GetAllHostelInfo {
+    getAllHostelInfo {
+      hostelName
+      location
+      numRooms
+      numAvailable
+      __typename
+    }
+  }
+`;
+export const getHostelInfo = /* GraphQL */ `
+  query GetHostelInfo($hostelId: Int) {
+    getHostelInfo(hostelId: $hostelId) {
+      hostelName
+      location
+      roomNo
+      floorNo
+      RoomType
+      capacity
+      available
+      __typename
+    }
+  }
+`;
+export const retrieveBookingInfo = /* GraphQL */ `
+  query RetrieveBookingInfo($rollNo: String) {
+    retrieveBookingInfo(rollNo: $rollNo) {
+      hostelId
+      roomNo
+      floorNo
+      RoomType
+      capacity
+      available
+      allotmentDate
+      completionDate
+      state
+      __typename
+    }
+  }
+`;
+export const getCurrentBookingInfo = /* GraphQL */ `
+  query GetCurrentBookingInfo($rollNo: String) {
+    getCurrentBookingInfo(rollNo: $rollNo) {
+      roomId
+      roomNo
+      floorNo
+      RoomType
+      capacity
+      available
+      hostelName
+      allotmentDate
+      completionDate
+      state
+      __typename
+    }
+  }
+`;
 export const getBOOKING = /* GraphQL */ `
   query GetBOOKING($bOOKINGID: Int!) {
     getBOOKING(bOOKINGID: $bOOKINGID) {

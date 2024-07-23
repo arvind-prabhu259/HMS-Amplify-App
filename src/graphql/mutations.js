@@ -1,6 +1,24 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const makeBooking = /* GraphQL */ `
+  mutation MakeBooking($roomNo: String, $hostelId: Int, $rollNo: String) {
+    makeBooking(roomNo: $roomNo, hostelId: $hostelId, rollNo: $rollNo) {
+      Error_Message
+      Success_Message
+      __typename
+    }
+  }
+`;
+export const cancelBooking = /* GraphQL */ `
+  mutation CancelBooking($rollNo: String) {
+    cancelBooking(rollNo: $rollNo) {
+      Error_Message
+      Success_Message
+      __typename
+    }
+  }
+`;
 export const createBOOKING = /* GraphQL */ `
   mutation CreateBOOKING(
     $input: CreateBOOKINGInput!
